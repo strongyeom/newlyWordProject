@@ -36,6 +36,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         print("59604=")
         print("이부분")
+        print("테스트 입니다.")
         settingButtonName()
         settingSearchTextField()
         settingMainText()
