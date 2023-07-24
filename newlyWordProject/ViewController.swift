@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     
     @IBOutlet var buttonNameCollection: [UIButton]!
     
-    let newlyWordDictionary: [String:String] = [
+    var newlyWordDictionary: [String:String] = [
         "상남자": "남자다운 모습을 가지고 있는 남자",
         "신박하다": "새롭고 놀랍다",
         "갓생": "열심히 사는 인생",
@@ -34,22 +34,20 @@ class ViewController: UIViewController {
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("59604=")
-        print("이부분")
-        print("테스트 입니다.")
-        print("test push commit 동시에")
-        print("웹에서 리드미 작성했음")
+        
         settingButtonName()
-        settingSearchTextField()
+        settingSearchStackView()
         settingMainText()
     }
     
     
-    func settingSearchTextField() {
+    func settingSearchStackView() {
         searchStackView.layer.borderWidth = 1
         searchStackView.layer.borderColor = UIColor.black.cgColor
         searchButton.backgroundColor = .black
         searchButton.tintColor = .white
+        inputTextField.autocapitalizationType = .none
+        inputTextField.placeholder = "신조어를 입력해주세요."
     }
     
     func settingButtonName() {
@@ -90,17 +88,31 @@ class ViewController: UIViewController {
     
     @IBAction func inputTextFieldReturnClicked(_ sender: UITextField) {
         
-        searchNewWordDescription(newWord: inputTextField.text)
+       
+        
+        guard let text = inputTextField.text else { return }
+        print("text",text)
+        if text.contains(" ") || text.count < 1 {
+            let alert = UIAlertController(title: "경고", message: "텍스트에 띄어쓰기 또는 한글자만 입력되었습니다.", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "확인", style: .default)
+            alert.addAction(ok)
+            present(alert, animated: true)
+            inputTextField.text = ""
+        } else {
+            searchNewWordDescription(newWord: inputTextField.text)
+        }
 
     }
     
     @IBAction func searchButtonClicked(_ sender: UIButton) {
         searchNewWordDescription(newWord: inputTextField.text)
+        print("keyNameArray",keyNameArray)
     }
     
     @IBAction func newlyWordButtonClicked(_ sender: UIButton) {
         
-        inputTextField.text = sender.titleLabel?.text
+        guard let textFieldText = sender.titleLabel else { return }
+        inputTextField.text = textFieldText.text
        
     }
     
@@ -112,7 +124,48 @@ class ViewController: UIViewController {
             }
         }
         
+        if !keyNameArray.contains(inputTextField.text ?? "0") {
+            resultLabel = "찾을 수 없습니다."
+        }
         descriptionLabel.text = resultLabel
+        
+        //  알럿을 통해 새로운 키워드 등록하기
+        if resultLabel == "찾을 수 없습니다." {
+            let alert = UIAlertController(title: "신조어 등록하기", message: "신조어와 내용을 적어주세요", preferredStyle: .alert)
+        
+            alert.addTextField { text in
+                text.placeholder = "신조어"
+            }
+            alert.addTextField { text in
+                text.placeholder = "내용을 입력해주세요"
+            }
+            
+            let ok = UIAlertAction(title: "확인", style: .default) { _ in
+                let newWord = alert.textFields?[0].text
+                let newWordDescription = alert.textFields?[1].text
+                
+                guard let newWordDescription = newWordDescription,
+                      let newWord = newWord else { return }
+                
+                
+                
+                
+                self.newlyWordDictionary.updateValue(newWordDescription, forKey: newWord)
+                self.inputTextField.text = ""
+                self.descriptionLabel.text = ""
+                self.keyNameArray.append(newWord)
+                print("newlyWordDictionary",self.newlyWordDictionary)
+            }
+            let cancel = UIAlertAction(title: "취소", style: .destructive) { _ in
+                self.inputTextField.text = ""
+                self.descriptionLabel.text = ""
+            }
+            
+            
+            alert.addAction(ok)
+            alert.addAction(cancel)
+            present(alert, animated: true)
+        }
     }
     
 }
