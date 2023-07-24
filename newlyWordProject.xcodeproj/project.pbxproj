@@ -17,6 +17,7 @@
 		26AC3D1E2A6ABF1100A4CB19 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26AC3D1C2A6ABF1100A4CB19 /* Main.storyboard */; };
 		26AC3D202A6ABF1300A4CB19 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 26AC3D1F2A6ABF1300A4CB19 /* Assets.xcassets */; };
 		26AC3D232A6ABF1300A4CB19 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26AC3D212A6ABF1300A4CB19 /* LaunchScreen.storyboard */; };
+		26E7216F2A6E06920015696A /* CommitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E7216E2A6E06920015696A /* CommitViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		26AC3D1F2A6ABF1300A4CB19 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		26AC3D222A6ABF1300A4CB19 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		26AC3D242A6ABF1300A4CB19 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		26E7216E2A6E06920015696A /* CommitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 				26AC3D1F2A6ABF1300A4CB19 /* Assets.xcassets */,
 				26AC3D212A6ABF1300A4CB19 /* LaunchScreen.storyboard */,
 				26AC3D242A6ABF1300A4CB19 /* Info.plist */,
+				26E7216E2A6E06920015696A /* CommitViewController.swift */,
 			);
 			path = newlyWordProject;
 			sourceTree = "<group>";
@@ -160,6 +163,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				26407BF72A6BE615001DFA17 /* BaeMinViewController.swift in Sources */,
+				26E7216F2A6E06920015696A /* CommitViewController.swift in Sources */,
 				26AC3D1B2A6ABF1100A4CB19 /* ViewController.swift in Sources */,
 				26407BF52A6BBF72001DFA17 /* MusicViewController.swift in Sources */,
 				26AC3D172A6ABF1100A4CB19 /* AppDelegate.swift in Sources */,

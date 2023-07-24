@@ -34,7 +34,7 @@ class ViewController: UIViewController {
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("123")
+        print("59604=")
         print("이부분")
         settingButtonName()
         settingSearchTextField()
