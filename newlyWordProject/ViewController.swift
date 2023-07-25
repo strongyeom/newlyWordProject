@@ -7,7 +7,16 @@
 
 import UIKit
 
+// Todo
+// 1. 띄어쓰기 whitespace 적용해보기 ✅
+// 2. 워딩들 Enum으로 만들어보기 ✅
+
 class ViewController: UIViewController {
+    
+    enum NewWord {
+        case success
+        case none
+    }
     
     @IBOutlet var inputTextField: UITextField!
     @IBOutlet var searchStackView: UIStackView!
@@ -28,9 +37,12 @@ class ViewController: UIViewController {
         "항마력": "정신석 내성, 대항력, 평점심을 말함"
     ]
     
-    var keyNameArray: [String] = []
+   // var keyNameArray: [String] = []
+    lazy var keyNameArray: [String] = newlyWordDictionary.map { $0.key }
     
     var resultLabel: String = ""
+    
+    var isNewWord: NewWord = .success
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +59,9 @@ class ViewController: UIViewController {
         searchButton.backgroundColor = .black
         searchButton.tintColor = .white
         inputTextField.autocapitalizationType = .none
+        inputTextField.autocorrectionType = .no
         inputTextField.placeholder = "신조어를 입력해주세요."
+        
     }
     
     func settingButtonName() {
@@ -60,8 +74,7 @@ class ViewController: UIViewController {
         
         nextlayoutPraticeBtn.setTitle("레이아웃 연습하기", for: .normal)
         // Dictionary에서 key빼서 배열을 만든다. -> for문이 돌아갈때 순서있게 이름을 넣어주기 위함
-        keyNameArray = newlyWordDictionary.map { $0.key }
-        
+         // keyNameArray = newlyWordDictionary.map { $0.key }
         // button에 setTitle 속성을 사용해서 이름을 부여 한다.
         for index in 0..<buttonNameCollection.count {
             buttonNameCollection[index].setTitle(keyNameArray[index], for: .normal)
@@ -91,8 +104,10 @@ class ViewController: UIViewController {
        
         
         guard let text = inputTextField.text else { return }
-        print("text",text)
-        if text.contains(" ") || text.count < 1 {
+        let whiteText = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        print("text",whiteText)
+        if whiteText.count < 1 {
             let alert = UIAlertController(title: "경고", message: "텍스트에 띄어쓰기 또는 한글자만 입력되었습니다.", preferredStyle: .alert)
             let ok = UIAlertAction(title: "확인", style: .default)
             alert.addAction(ok)
@@ -126,11 +141,11 @@ class ViewController: UIViewController {
         
         if !keyNameArray.contains(inputTextField.text ?? "0") {
             resultLabel = "찾을 수 없습니다."
+            isNewWord = .none
         }
-        descriptionLabel.text = resultLabel
         
         //  알럿을 통해 새로운 키워드 등록하기
-        if resultLabel == "찾을 수 없습니다." {
+        if isNewWord == .none {
             let alert = UIAlertController(title: "신조어 등록하기", message: "신조어와 내용을 적어주세요", preferredStyle: .alert)
         
             alert.addTextField { text in
@@ -166,6 +181,9 @@ class ViewController: UIViewController {
             alert.addAction(cancel)
             present(alert, animated: true)
         }
+        
+        isNewWord = .success
+        descriptionLabel.text = resultLabel
     }
     
 }
